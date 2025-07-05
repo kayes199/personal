@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec | Bug Bounty Hunter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+        
+        body {
+            background-color: #000;
+            color: #00ff41;
+            font-family: 'Ubuntu Mono', monospace;
+            overflow-x: hidden;
+        }
+        
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        /* Glowing matrix text */
+        .matrix-glow {
+            text-shadow: 0 0 5px #00ff41;
+        }
+        
+        /* Terminal window style */
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+        
+        /* Blinking cursor */
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Hacker card effect */
+        .hacker-card {
+            transition: all 0.3s ease;
+            background-color: rgba(0, 10, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+        }
+        
+        .hacker-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ff41;
+            box-shadow: 0 10px 25px rgba(0, 255, 65, 0.2);
+        }
+        
+        /* Button glow */
+        .matrix-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        
+        .matrix-btn:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix" class="matrix-rain"></canvas>
+
+    <!-- Navigation -->
+    <nav class="py-6 px-6 md:px-12 flex justify-between items-center">
+        <div class="flex items-center space-x-2 matrix-glow">
+            <div class="w-3 h-3 rounded-full bg-green-500 matrix-btn"></div>
+            <span class="text-2xl font-bold">CyberSec</span>
+        </div>
+        <div class="hidden md:flex space-x-8 items-center">
+            <a href="#about" class="text-gray-400 hover:text-green-400 transition">About</a>
+            <a href="#skills" class="text-gray-400 hover:text-green-400 transition">Skills</a>
+            <a href="#work" class="text-gray-400 hover:text-green-400 transition">Work</a>
+            <a href="#contact" class="text-gray-400 hover:text-green-400 transition">Contact</a>
+        </div>
+        <button class="md:hidden text-gray-400 hover:text-green-400">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight matrix-glow">
+                    <span>Hello, I'm</span><br>
+                    <span class="text-green-400">[Your Name]</span>
+                </h1>
+                <p class="text-lg text-gray-400 max-w-lg">
+                    Bug Bounty Hunter | Penetration Tester | Cybersecurity Researcher
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contact" class="px-8 py-3 bg-green-900 text-green-400 rounded-full font-medium matrix-btn hover:opacity-90 transition">
+                        Contact Me
+                    </a>
+                    <a href="#work" class="px-8 py-3 border border-green-400 text-green-400 rounded-full font-medium hover:bg-green-900 hover:bg-opacity-30 transition">
+                        See My Work
+                    </a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-github text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-linkedin text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-hackerone text-2xl"></i></a>
+                </div>
+            </div>
+            <div class="terminal rounded-lg overflow-hidden">
+                <div class="px-4 py-3 flex items-center space-x-2 border-b border-green-900">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <div class="text-xs text-gray-400 ml-2">user@cybersec:~$</div>
+                </div>
+                <div class="p-4 text-sm">
+                    <div class="text-green-400">$ whoami</div>
+                    <div class="mt-1">Security Researcher | Ethical Hacker</div>
+                    <div class="text-green-400 mt-4">$ cat skills.txt</div>
+                    <div class="mt-1">Web App Pentesting</div>
+                    <div class="mt-1">Network Security</div>
+                    <div class="mt-1">Bug Bounty Hunting</div>
+                    <div class="mt-1">Reverse Engineering</div>
+                    <div class="text-green-400 mt-4">$ ./contact.sh</div>
+                    <div class="text-green-300 mt-2">[+] Ready for collaboration</div>
+                    <div class="blinking-cursor mt-2 h-4 w-2 bg-green-400 inline-block"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 md:px-12 lg:px-24 bg-black bg-opacity-70 border-t border-b border-green-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-400 matrix-glow">About Me</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Who am I?</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-gray-400 mb-6">
+                        I'm a cybersecurity professional specializing in **bug bounty hunting** and **penetration testing**.  
+                        I help organizations uncover vulnerabilities before malicious hackers do.
+                    </p>
+                    <p class="text-gray-400 mb-6">
+                        With experience in **web app security**, **network pentesting**, and **red teaming**,  
+                        I've discovered critical vulnerabilities in Fortune 500 companies and startups.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#work" class="px-6 py-2 bg-green-900 text-green-400 rounded-full font-medium matrix-btn hover:opacity-90 transition">
+                            My Discoveries
+                        </a>
+                        <a href="#contact" class="px-6 py-2 border border-green-400 text-green-400 rounded-full font-medium hover:bg-green-900 hover:bg-opacity-30 transition">
+                            Hire Me
+                        </a>
+                    </div>
+                </div>
+                <div class="terminal rounded-lg overflow-hidden">
+                    <div class="px-4 py-3 flex items-center space-x-2 border-b border-green-900">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div class="text-xs text-gray-400 ml-2">user@cybersec:~/about$</div>
+                    </div>
+                    <div class="p-4 text-sm">
+                        <div class="text-green-400">$ cat achievements.txt</div>
+                        <div class="mt-1">- Top 1% on HackerOne/Bugcrowd</div>
+                        <div class="mt-1">- 50+ CVEs discovered</div>
+                        <div class="mt-1">- $100,000+ in bug bounties</div>
+                        <div class="mt-1">- Speaker at DEF CON/BHUSA</div>
+                        <div class="text-green-400 mt-4">$ ./skills.sh</div>
+                        <div class="text-green-300 mt-2">[+] Web App Security</div>
+                        <div class="text-green-300">[+] Network Pentesting</div>
+                        <div class="text-green-300">[+] Mobile Security</div>
+                        <div class="blinking-cursor mt-2 h-4 w-2 bg-green-400 inline-block"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-400 matrix-glow">My Skills</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Tools & Techniques</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-globe text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Web App Pentesting</h3>
+                    <p class="text-gray-400 text-sm mt-2">OWASP Top 10, API Security</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-network-wired text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Network Security</h3>
+                    <p class="text-gray-400 text-sm mt-2">Nmap, Metasploit, C2 Frameworks</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-mobile-alt text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Mobile Security</h3>
+                    <p class="text-gray-400 text-sm mt-2">iOS/Android, Frida, Burp Suite</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-bug text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Bug Bounty</h3>
+                    <p class="text-gray-400 text-sm mt-2">HackerOne, Bugcrowd, Intigriti</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-code text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Secure Coding</h3>
+                    <p class="text-gray-400 text-sm mt-2">SAST/DAST, Code Review</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-lock text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Red Teaming</h3>
+                    <p class="text-gray-400 text-sm mt-2">Adversary Simulation</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-shield-alt text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Threat Modeling</h3>
+                    <p class="text-gray-400 text-sm mt-2">STRIDE, Attack Trees</p>
+                </div>
+                <div class="hacker-card rounded-lg p-6 text-center">
+                    <i class="fas fa-user-secret text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">Social Engineering</h3>
+                    <p class="text-gray-400 text-sm mt-2">Phishing, OSINT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-20 px-6 md:px-12 lg:px-24 bg-black bg-opacity-70 border-t border-b border-green-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-400 matrix-glow">My Work</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Bug Bounties & Research</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="hacker-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-green-900 text-green-400 text-xs rounded-full">Critical</span>
+                        <span class="text-gray-400 text-sm">$5,000</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">RCE in FinTech Platform</h3>
+                    <p class="text-gray-400 text-sm mb-4">Remote Code Execution via API misconfiguration.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-green-900 bg-opacity-30 text-green-400 text-xs rounded-full">CVE-2023-XXXX</span>
+                        <span class="px-2 py-1 bg-green-900 bg-opacity-30 text-green-400 text-xs rounded-full">HackerOne</span>
+                    </div>
+                </div>
+                <div class="hacker-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-yellow-900 text-yellow-400 text-xs rounded-full">High</span>
+                        <span class="text-gray-400 text-sm">$3,000</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">SSRF in Cloud Service</h3>
+                    <p class="text-gray-400 text-sm mb-4">Server-Side Request Forgery leading to metadata exposure.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-green-900 bg-opacity-30 text-green-400 text-xs rounded-full">Bugcrowd</span>
+                    </div>
+                </div>
+                <div class="hacker-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-red-900 text-red-400 text-xs rounded-full">Critical</span>
+                        <span class="text-gray-400 text-sm">$10,000</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Auth Bypass in Web3 App</h3>
+                    <p class="text-gray-400 text-sm mb-4">Full account takeover via JWT flaw.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-green-900 bg-opacity-30 text-green-400 text-xs rounded-full">CVE-2023-XXXX</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#" class="px-6 py-3 border border-green-400 text-green-400 rounded-full font-medium hover:bg-green-900 hover:bg-opacity-30 transition">
+                    View All Reports
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-400 matrix-glow">Get In Touch</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Let's collaborate on security research.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-green-900 bg-opacity-30 flex items-center justify-center">
+                            <i class="fas fa-envelope text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Email</h3>
+                            <a href="mailto:contact@example.com" class="text-gray-400 hover:text-green-400 transition">contact@example.com</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-green-900 bg-opacity-30 flex items-center justify-center">
+                            <i class="fab fa-telegram text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Telegram</h3>
+                            <a href="https://t.me/username" class="text-gray-400 hover:text-green-400 transition">@username</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-green-900 bg-opacity-30 flex items-center justify-center">
+                            <i class="fab fa-keybase text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">PGP Key</h3>
+                            <a href="#" class="text-gray-400 hover:text-green-400 transition">0xDEADBEEF</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hacker-card rounded-xl p-8">
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm text-gray-400 mb-1">Name</label>
+                            <input type="text" id="name" class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-green-400 transition" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm text-gray-400 mb-1">Email</label>
+                            <input type="email" id="email" class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-green-400 transition" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm text-gray-400 mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-green-400 transition"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-green-900 text-green-400 rounded-full font-medium matrix-btn hover:opacity-90 transition">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 md:px-12 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-400 hover:text-green-400 transition"><i class="fab fa-hackerone"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm">© 2023 [Your Name]. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Matrix Rain Script -->
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+        
+        const alphabet = katakana + latin + nums + symbols;
+        
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        const rainDrops = [];
+        
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+        
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+        
+        setInterval(draw, 30);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to your server
+            console.log('Form submitted:', { name, email, message });
+            
+            // Show success message
+            alert('Message sent! I will contact you soon.');
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
